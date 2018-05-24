@@ -50,8 +50,6 @@ public:
 	unordered_map<int, int> C;
 	unordered_map<int, int> delete_judge;
 	unordered_map<int, vector<int>>S;
-	//vector<vector<int>>S;
-	//unordered_map<int, int>T;
 	int T[100000];
 	set<int> situation;
 	int total_length;

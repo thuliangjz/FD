@@ -11,20 +11,6 @@ Row::Row(char* context, int i) {
 	char *block = NULL;
 	int j;
 	char* temp = strtok(context, "," );
-	/*
-	while (temp) {
-		j = 0;
-		attribute[count] = new char[100];
-		for (j = 0; j < strlen(temp); j++) {
-			attribute[count][j] = temp[j];
-		}
-		attribute[count][j] = '\0';
-		temp = strtok_s(NULL, ",", &buf);
-
-		count++;
-
-
-	}*/
 	j = 0;
 	attribute[count] = new char[100];
 	for (j = 0; j < strlen(temp); j++) {
@@ -53,7 +39,6 @@ Row::Row(char* context, int i) {
 		  
 	}
 	attributeNumber = count + 1;
-	//cout << attributeNumber << endl;
 }
 
 
@@ -63,7 +48,6 @@ DataBase::DataBase() {
 	memset(T, 0, sizeof(int) * 100000);
 	unordered_map<string, vector<int>> my_map[20];
 	nowIndex = 1;
-	//S.push_back(empty);
 	ifstream in("data.txt", ifstream::in);
 	string s;
 	int count = 0;
@@ -133,15 +117,7 @@ vector<vector<int>> DataBase::combine(int x, int y) {
 		for (j = 0; j < partition[y][i].size(); j++) {
 			int u = partition[y][i][j];
 			if (T[u] > 0) {
-				/*
-				if (S.size() >= T[u]) {
-					vector<int> temp;
-					temp.push_back(u);
-					S.push_back(temp);
-				}
-				else*/
-				S[T[u]].push_back(u);
-
+			S[T[u]].push_back(u);
 			}
 		}
 		for (t = 0; t < partition[y][i].size(); t++) {
@@ -153,13 +129,6 @@ vector<vector<int>> DataBase::combine(int x, int y) {
 		}
 	}
 	memset(T, 0, sizeof(int) * 100000);
-	/*
-	for (i = 1; i < partition[x].size(); i++) {
-		for (j = 0; j < partition[x][i].size(); j++) {
-			int m = partition[x][i][j];
-			T[m] = 0;
-		}
-	}*/
 	return partition[aim];
 }
 
@@ -195,7 +164,6 @@ void DataBase::computDependency() {
 		}
 		for (int i = 1; i < L[z].size(); i++) {
 			int k = 1 << (L[z][i] - 1);
-			//o = o & C[r&(~(r&k))];
 			o = o & C[r - k];
 		}
 		C[r] = o;
@@ -233,10 +201,7 @@ void DataBase::computDependency() {
 				
 				if (partition[m].size() == partition[n].size()) {
 
-					//out << m << "->" << y << "\n";
-					//cout << m << "->" << y << endl;
 					functionResult(m, y);
-					//C[p] = C[p]&(~(C[p]&y));
 					C[p] = C[p] - y;
 					C[p] = remove(C[p], p, whole);
 
@@ -245,10 +210,8 @@ void DataBase::computDependency() {
 
 
 			}
-
 			temp = temp >> 1;
 			count++;
-
 		}
 	}
 
@@ -362,24 +325,10 @@ void DataBase::TANE() {
 	clock_t start, end;
 	double total;
 	while (L.size() > 1) {
-		//start = clock();
 		computDependency();
 		end = clock();
-		//total = (double)(end - start) / CLOCKS_PER_SEC;
-		//cout << "compute time" << total << "��" << endl;
-		//start = clock();
 		prune();
-		//end = clock();
-		//total = (double)(end - start) / CLOCKS_PER_SEC;
-		//cout << "pruning" << total << "��" << endl;
-		//start = clock();
 		generateNext();
-		//end = clock();
-		//total = (double)(end - start) / CLOCKS_PER_SEC;
-		//cout << "generateNext time" << total << "��" << endl;
-
 	}
 	out.close();
 }
-
-
