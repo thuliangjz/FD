@@ -38,7 +38,7 @@ public:
 	vector<vector<int>> L;
 	set<int> L_real;
 	vector<int> L_test;
-	ofstream out;
+	//ofstream out;
 	int attributeNumber;
 	int rowNumber;
 	int nowIndex;
@@ -58,11 +58,13 @@ public:
 	unordered_map<int, int> binary_number;
 	vector<vector<int>> L_new;
 	vector<int>empty;
+	pair<int, int> result[1000];
+	int result_number;
 
 
 public:
 	vector<vector<int>> generateNext();
-	void functionResult(int m, int n);
+	void functionResult(int, int, ofstream&);
 	vector<vector<int>> combine(int, int);
 	void computDependency();
 	int countSet(vector<int>&);

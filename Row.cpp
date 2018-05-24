@@ -59,7 +59,8 @@ Row::Row(char* context, int i) {
 
 
 DataBase::DataBase() {
-	out.open("output_3.txt", ios::out);
+	result_number = 0;
+	//out.open("output_4.txt", ios::out);
 	memset(T, 0, sizeof(int) * 100000);
 	unordered_map<string, vector<int>> my_map[20];
 	nowIndex = 1;
@@ -235,7 +236,8 @@ void DataBase::computDependency() {
 
 					//out << m << "->" << y << "\n";
 					//cout << m << "->" << y << endl;
-					functionResult(m, y);
+					//functionResult(m, y);
+					result[result_number++] = make_pair(m, y);
 					//C[p] = C[p]&(~(C[p]&y));
 					C[p] = C[p] - y;
 					C[p] = remove(C[p], p, whole);
@@ -254,29 +256,33 @@ void DataBase::computDependency() {
 
 }
 
-void DataBase::functionResult(int m, int n) {
+void DataBase::functionResult(int m, int n, ofstream& out_r) {
 	int r = m;
 	int k = n;
 	int count = 0;
 	while (r) {
 		int j = r % 2;
 		if (j == 1) {
-			out << (count + 1) << " ";
+			out_r << (count + 1) << " ";
+			cout << (count + 1) << " ";
 		}
 		r = r >> 1;
 		count++;
 	}
 	count = 0;
-	out << "-> ";
+	out_r << "-> ";
+	cout << "-> ";
 	while (k) {
 		int j = k % 2;
 		if (j == 1) {
-			out << (count + 1) << " ";
+			out_r << (count + 1) << " ";
+			cout << (count + 1) << " ";
 		}
 		k = k >> 1;
 		count++;
 	}
-	out << endl;
+	out_r << endl;
+	cout << endl;
 }
 
 
@@ -379,7 +385,7 @@ void DataBase::TANE() {
 		//cout << "generateNext time" << total << "Ãë" << endl;
 
 	}
-	out.close();
+	//out.close();
 }
 
 
