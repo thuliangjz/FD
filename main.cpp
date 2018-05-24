@@ -21,7 +21,7 @@ int main() {
 	database.TANE();
 	end = clock();
 	totaltime = (double)(end - start) / CLOCKS_PER_SEC;
-	cout << "时间为" << totaltime << "秒" << endl;
+	cout << "时锟斤拷为" << totaltime << "锟斤拷" << endl;
 	//cout << database.partition[1 | 16].size() << endl;
 	//cout << database.combine(1, 16).size() << endl;
 	//cout << database.combine(16, 1).size() << endl;
@@ -36,6 +36,6 @@ int main() {
 	
 
 	
-	system("pause");
+	//system("pause");
 	return 0;
 }

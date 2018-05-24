@@ -10,7 +10,7 @@ Row::Row(char* context, int i) {
 	char* buf = NULL;
 	char *block = NULL;
 	int j;
-	char* temp = strtok_s(context, "," ,&buf);
+	char* temp = strtok(context, "," );
 	/*
 	while (temp) {
 		j = 0;
@@ -34,7 +34,7 @@ Row::Row(char* context, int i) {
 	
 	while (temp) {
 		
-		temp = strtok_s(NULL, ",", &buf);
+		temp = strtok(NULL, ",");
 		if (temp == NULL) {
 			break;
 		}
@@ -59,7 +59,7 @@ Row::Row(char* context, int i) {
 
 
 DataBase::DataBase() {
-	out.open("output_2.txt", ios::out);
+	out.open("output_3.txt", ios::out);
 	memset(T, 0, sizeof(int) * 100000);
 	unordered_map<string, vector<int>> my_map[20];
 	nowIndex = 1;
@@ -214,6 +214,7 @@ void DataBase::computDependency() {
 
 				int m = p & (~(p&y));
 				int n = m | y;
+				
 				if (partition[m].size() == 1 || partition[p].size() == 1) {
 					if (partition[n].size() == 0) {
 						partition[n].push_back(empty);
@@ -222,8 +223,8 @@ void DataBase::computDependency() {
 				}
 	
 				if (partition[n].size() == 0) {
-					if(partition[m].size() > partition[y].size())
-					   combine(y, m);
+					if(partition[m].size() < partition[y].size())
+					   combine(m, y);
 					else {
 						combine(m, y);
 					}
@@ -260,25 +261,21 @@ void DataBase::functionResult(int m, int n) {
 	while (r) {
 		int j = r % 2;
 		if (j == 1) {
-			cout << (count + 1) << " ";
 			out << (count + 1) << " ";
 		}
 		r = r >> 1;
 		count++;
 	}
 	count = 0;
-	cout << "-> ";
 	out << "-> ";
 	while (k) {
 		int j = k % 2;
 		if (j == 1) {
-			cout << (count + 1) << " ";
 			out << (count + 1) << " ";
 		}
 		k = k >> 1;
 		count++;
 	}
-	cout << endl;
 	out << endl;
 }
 
@@ -362,13 +359,24 @@ void DataBase::prune() {
 }
 
 void DataBase::TANE() {
-	
+	clock_t start, end;
+	double total;
 	while (L.size() > 1) {
+		//start = clock();
 		computDependency();
-
+		end = clock();
+		//total = (double)(end - start) / CLOCKS_PER_SEC;
+		//cout << "compute time" << total << "��" << endl;
+		//start = clock();
 		prune();
-
+		//end = clock();
+		//total = (double)(end - start) / CLOCKS_PER_SEC;
+		//cout << "pruning" << total << "��" << endl;
+		//start = clock();
 		generateNext();
+		//end = clock();
+		//total = (double)(end - start) / CLOCKS_PER_SEC;
+		//cout << "generateNext time" << total << "��" << endl;
 
 	}
 	out.close();
